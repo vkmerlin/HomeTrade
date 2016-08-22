@@ -1,0 +1,12 @@
+﻿@model HRPortal.Model.ViewModels.NewsViewModel
+
+@{
+    ViewBag.Title = "Main Page";
+}
+
+@Html.Partial("Partials/News", Model)
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/ViewModel/News/NewsManagement.js")
+}

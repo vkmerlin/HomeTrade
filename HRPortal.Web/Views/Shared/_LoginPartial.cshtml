@@ -1,0 +1,10 @@
+﻿@using HRPortal.Web.App_LocalResources;
+
+@if (Request.IsAuthenticated)
+{
+    <div class="btn__login">@Html.ActionLink(DataRU.Logoff, "LogOff", "Account")</div>
+}
+else
+{
+    <div class="btn__login">@Html.ActionLink(DataRU.Login, "Login", "Account")</div>
+}

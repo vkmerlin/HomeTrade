@@ -1,0 +1,75 @@
+﻿@using HRPortal.Web.App_LocalResources;
+
+<div class="сol_2">
+    <div id="categorymanagement" class="content">
+        <h2 class="title">@DataRU.Categories</h2>
+        <button class="add__btn" data-bind="click: showcategoriessection">@DataRU.AddCategory<span class="plus__wrap"><i class="fa fa-plus"></i></span></button>
+        <div id="addcatbtn" class="addNews hidden">
+            <div class="inn">
+                <input type="text" data-bind="value: categoryName" placeholder="Category name">
+            </div>
+            <div class="addPost">
+                <button class="add__btn add__btnlong" data-bind="click: createCategory">@DataRU.NewCategory <span class="plus__wrap"><i class="fa fa-plus"></i></span></button>
+            </div>
+        </div>
+
+
+        <ul class="list-group" data-bind="foreach: Enumerable.From(allCategories()).OrderBy(function (x) { return x.categoryName }).ToArray()">
+            <li class="list-group-item">
+                <span data-bind="text: categoryName"></span>
+                <span class="editcategoryarea">
+                    <a href="javascript:void()" data-bind="click: $parent.editCategory"><img src="~/Images/editicon.png" /></a>
+                    <a href="javascript:void()" data-bind="click: $parent.removeCategory"><img src="~/Images/removeicon.png" /></a>
+                </span>
+            </li>
+
+        </ul>
+    </div>
+
+
+
+    <div id="itemmanagement" class="content">
+        <h2 class="title">@DataRU.Products</h2>
+        <button class="add__btn" data-bind="click: showproductsection">@DataRU.AddProduct<span class="plus__wrap"><i class="fa fa-plus"></i></span></button>
+        <div id="addprodbtn" class="addNews hidden">
+            <div class="inn">
+                <input type="text" data-bind="value: name" placeholder="Product name">
+            </div>
+            <div class="inn">
+                <input type="text" data-bind="value: description" placeholder="Product description">
+            </div>
+
+            <div class="inn">
+                <input type="number" data-bind="value: price" placeholder="Product price">
+            </div>
+
+            <div class="select-outer">
+                <select data-bind="options: allCategories, optionsText: 'categoryName', optionsValue: 'id', value: selectedCategory, optionsCaption: '@DataRU.ChooseCategory'"></select>
+            </div>
+            <div class="addPost">
+                <button class="add__btn add__btnlong" data-bind="click: createProduct">@DataRU.NewProduct <span class="plus__wrap"><i class="fa fa-plus"></i></span></button>
+            </div>
+        </div>
+
+
+        <ul class="list-group" data-bind="foreach: Enumerable.From(allProducts()).OrderBy(function (x) { return x.name }).ToArray()">
+            <li class="list-group-item">
+                <span data-bind="text: name"></span>
+                <span class="editcategoryarea">
+                    <a href="javascript:void()" data-bind="click: $parent.editProduct"><img src="~/Images/editicon.png" /></a>
+                    <a href="javascript:void()" data-bind="click: $parent.removeProduct"><img src="~/Images/removeicon.png" /></a>
+                </span>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/ViewModel/Admin/itemsVM.js")
+    @Scripts.Render("~/Scripts/ViewModel/Admin/categoryVM.js")
+}

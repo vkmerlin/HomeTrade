@@ -1,0 +1,161 @@
+﻿@model HRPortal.Model.ViewModels.NewsViewModel
+@using HRPortal.Web.App_LocalResources;
+
+<div id="newssection" class="сol_2">
+    <div class="content">
+        <h2 class="title">@DataRU.Mynewsfeed</h2>
+        @if (User.IsInRole("Administrator"))
+        {
+            <div class="addNews">
+                <div class="inn">
+                    <input type="text" data-bind="value: CreateTitle" placeholder="Title">
+                </div>
+                <div class="inn">
+                    <textarea rows="4" data-bind="value: CreateMessage" placeholder="What do you want to say?"></textarea>
+                </div>
+                <div class="newspreviewimage" data-bind="foreach: CreateImages">
+                    <img data-bind="attr: { src: data }" />
+                </div>
+                <div class="addPost">
+                    <div class="form-controll-area">
+                        <div class="select-outer">
+                            @Html.DropDownListFor(x => Model.NewsCategoryId, new SelectList(Model.NewsCategories, "Id", "CategoryName"), new { @id = "newscatsddl" })
+                        </div>
+                    </div>
+                    <div class="check-wrap">
+                        <input type="checkbox" class="checkbox" data-bind="checked: NewsPinned" />
+                        <label>Pin post</label>
+                    </div>
+                    <div id="addfilecontainer" class="addfile" title="Add a file">
+                        <input id="fileUpload" type="file" multiple accept="image/jpeg, image/png, image/gif, image/tiff" />
+                    </div>
+                    <button class="add__btn" data-bind="click: createNews">Add Post <span class="plus__wrap"><i class="fa fa-plus"></i></span></button>
+                </div>
+            </div>
+        }
+        <div data-bind="foreach: Enumerable.From(AllNews()).OrderByDescending(function (x) { return x.isPin }).ThenByDescending(function (x) { return x.createDate }).ToArray()">
+            <article class="post">
+                @if (User.IsInRole("Administrator"))
+                {
+                    <div class="editnewsarea">
+                        <a href="javascript:void()" data-bind="click: $parent.editNews"><img src="~/Images/editicon.png" /></a>
+                        <a href="javascript:void()" data-bind="click: $parent.removeNews"><img src="~/Images/removeicon.png" /></a>
+                    </div>
+                }
+                <header class="post__header">
+                    <i class="fa fa-newspaper-o"></i>
+                    <h3><a href="" title="" data-bind="visible: $parent.NewsId() != id, text: title"></a></h3>
+                    <input type="text" data-bind="visible: $parent.NewsId() == id, value: title" />
+                </header>
+                <div class="post__entry">
+                    <p>
+                        <span data-bind="visible: $parent.NewsId() != id, text: message.length > 300 ? message.substr(0, 300) : message"></span>
+                        <span data-bind="visible: message.length > 300 && $parent.ShowFullMessage() != id, text: '...'"></span>
+                        <span data-bind="visible: $parent.ShowFullMessage() == id && $parent.NewsId() != id, text: message.length > 300 ? message.substr(300, message.length) : ''"></span>
+                    </p>
+                    <textarea type="text" data-bind="visible: $parent.NewsId() == id, value: message"></textarea>
+                    <a data-bind="visible: message.length > 300 && $parent.ShowFullMessage() != id, click: $parent.showfullmessage" href="javascript:void()">Show more</a>
+                    <div>
+                        <div class="newspreviewimage" data-bind="foreach: attachedFiles" style="float: left;">
+                            <div class="post-wrap" data-bind="attr: { id: id }" style="float: left;">
+                                <a href="#" target="_blank" data-bind="attr: { href: filePath }">
+                                    <img data-bind="attr: { src: filePath }" />
+                                </a>
+                                <div class="delete-button" data-bind="click: $root.removeAttachment, visible: $root.NewsId() == $parent.id">
+                                    <button class="button-delete"><p> X </p></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="newspreviewimage" data-bind="visible: $parent.NewsId() == id, foreach: $parent.NewsEditNewImages" style="float: left;">
+                            <img data-bind="attr: { src: data }" />
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+
+                    <div data-bind="visible: $parent.NewsId() == id" class="editnewspost">
+                        <div class="form-controll-area">
+                            <div class="select-outer">
+                                <select data-bind="options: $parent.AvailableCategories, optionsText: 'categoryName', optionsValue: 'id', value: newsCategoryId"></select>
+                            </div>
+                        </div>
+                        <div class="check-wrap">
+                            <input type="checkbox" class="checkbox" data-bind="checked: isPin" />
+                            <label>Pin post</label>
+                        </div>
+                        <div class="addfile" title="Add a file">
+                            <input data-bind="attr: { id: id }" class="editfileupload" id="fileUpload" type="file" multiple accept="image/jpeg, image/png, image/gif" />
+                        </div>
+                        <button class="add__btn" data-bind="click: $parent.loadNewsWithCurrentPosition">Cancel</button>
+                        <button class="add__btn" data-bind="click: $parent.updateNews">Save</button>
+                    </div>
+                </div>
+                <footer class="post__footer">
+                    <div class="comments__block">
+                        <div class="comments__title">
+                            <div class="commnet__info">
+                                <p><i class="fa fa-calendar"></i> @DataRU.Posted <span data-bind="text: formattedDate"></span></p>
+                            </div>
+                            <div class="newcomment">
+                                <div class="add__comment__area">
+                                    <textarea rows="4" placeholder="@DataRU.Addcoment" data-bind="value: $parent.CreateNewComment"></textarea>
+                                    <button class="addcomment__btn" data-bind="click: $parent.sendNewComment">@DataRU.Send <span class="plus__wrap"><i class="fa fa-plus"></i></span></button>
+                                    <div class="comment__count">
+                                        <i class="fa fa-comment-o"></i>
+                                        <span data-bind="text: comments.length == 0 ? 'Нет комментариев' : comments.length > 1 ? comments.length + ' комментариев' : comments.length +' комментарий'"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comments__body">
+                            <ul class="commnts__list" data-bind="foreach: Enumerable.From(comments).OrderBy(function (x) { return x.createDate }).ToArray() ">
+                                <li data-bind="visible: $index() > ($parent.comments.length - 4) || $root.ShowAllComments() == $parent.id">
+                                    <figure class="avatar">
+                                        <img src="uploads/002.png" alt="" title="">
+                                    </figure>
+                                    <div class="comment__text">
+                                        <div class="comment__head">
+                                            <span class="comment__name">User</span>
+                                            <span class="comment__time" data-bind="text: $root.formatDate($data)"></span>
+                                            <a class="comment__replay" href="#" title="" data-bind="click: $root.addNewReply">@DataRU.Answer</a>
+                                        </div>
+                                        <p data-bind="text: message"></p>
+                                        <div class="add__comment">
+                                            <figure class="comment__avatar">
+                                                <img src="uploads/005.png" alt="" title="">
+                                            </figure>
+                                        </div>
+                                    </div>
+                                    <div data-bind="visible: $root.NewReplyParent() == id">
+                                        <textarea rows="4" placeholder="Reply..." data-bind="value: $root.CreateNewReplyMessage"></textarea>
+                                        <button class="addcomment__btn" data-bind="click: $root.sendNewReply" style="width: 20%; float: right; margin: 2% 0 2% 0;">Reply <span class="plus__wrap"><i class="fa fa-plus"></i></span></button>
+                                    </div>
+                                    <ul class="commnts__list" data-bind="foreach: Enumerable.From(replies).OrderBy(function (x) { return x.createDate }).ToArray()">
+                                        <li>
+                                            <figure class="avatar">
+                                                <img src="uploads/002.png" alt="" title="">
+                                            </figure>
+                                            <div class="comment__text">
+                                                <div class="comment__head">
+                                                    <span class="comment__name">User</span>
+                                                    <span class="comment__time" data-bind="text: $root.formatDate($data)"></span>
+                                                </div>
+                                                <p data-bind="text: message"></p>
+                                                <div class="add__comment">
+                                                    <figure class="comment__avatar">
+                                                        <img src="uploads/005.png" alt="" title="">
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="#" title="" data-bind="visible: $parent.ShowAllComments() != id && comments.length > 3, click: $parent.expandCommentsSection">Show all comments</a>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </div>
+</div>

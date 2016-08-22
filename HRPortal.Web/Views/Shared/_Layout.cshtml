@@ -1,0 +1,143 @@
+﻿@using HRPortal.Web.App_LocalResources;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="#">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/dal")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/bootbox")
+    @Scripts.Render("~/bundles/linqJS")
+    @Scripts.Render("~/bundles/knockoutvalidation")
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="inner">
+                <div class="row">
+                    <div class="сol_1">
+                        <div class="logoWrap">
+                            <a class="logo" href="/Home/Index" title="">&nbsp;</a>
+                        </div>
+                    </div>
+                    <div class="сol_2">
+                        <div class="searchWrap">
+
+                        </div>
+                    </div>
+                    <div class="сol_3">
+                        <div class="nologged">
+                            <form method="post" action="#">
+                                <p class="nologged__date">@DateTime.Now.ToString("dddd, d MMMM")</p>
+                                <div class="nologged__form">
+                                    @Html.Partial("_LoginPartial");
+
+                                    <div class="form__user">
+                                        <div class="row_nologged">
+                                            <input type="email" placeholder="Email">
+                                        </div>
+                                        <div class="row_nologged">
+                                            <input type="password" placeholder="Password">
+                                        </div>
+                                        <div class="form__user__action">
+                                            <button class="more" href="#" title="">Log In <span class="next__wrap"><i class="fa fa-angle-right"></i></span></button>
+                                            <a class="forgot" href="#" title="">Forgot password?</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="main">
+            <div class="inner">
+                <div class="row">
+                    <div class="сol_1">
+                        <aside class="sedebar_1">
+                            <section class="mainMenu">
+                                <h2 class="title">@DataRU.Mainmenu</h2>
+                                <nav class="nav">
+                                    <ul class="menu">
+                                        @if (User.IsInRole("Administrator"))
+                                        {
+                                            <li><a href="~/Admin/Index" title=""><i class="fa fa-picture-o"></i>@DataRU.ItemsManagement</a></li>
+                                        }
+                                        <li><a href="~/Home/Index" title=""><i class="fa fa-newspaper-o"></i>@DataRU.News</a></li>
+                                        <li><a href="employees.html" title=""><i class="fa fa-picture-o"></i>@DataRU.Catalog</a></li>
+                                        <li><a href="events.html" title=""><i class="fa fa-calendar"></i>@DataRU.Discounts</a></li>
+                                        <li><a href="albums.html" title=""><i class="fa fa-user"></i>@DataRU.Actions</a></li>
+                                        <li><a href="#" title=""><i class="fa fa-folder-open-o"></i>@DataRU.Delivery</a></li>
+                                        <li><a href="#" title=""><i class="fa fa-file-text-o"></i>@DataRU.Payments</a></li>
+                                    </ul>
+                                </nav>
+                            </section>
+                        </aside>
+                    </div>
+                    @RenderBody()
+
+                    <div class="сol_3">
+                        <aside class="sedebar_2">
+                            <section class="promotions">
+                                <h2 class="title">@DataRU.PropositionOfTheWeek</h2>
+                                <div class="promotions__block">
+                                    <div class="slider-outer">
+                                        <div class="owl-demo">
+                                            <div class="item">
+                                                <h4>@DataRU.Board</h4>
+                                                <p>
+                                                    <a href="#" title="">@DataRU.Sale</a>
+                                                    @DataRU.Board
+                                                </p>
+                                                <p><b>@DataRU.Discount</b>@DataRU.Percents15</p>
+                                                <figure><img src="~/uploads/slide-1.jpg" alt="" title=""></figure>
+                                            </div>
+                                            <div class="item">
+                                                <h4>@DataRU.Roga</h4>
+                                                <p>
+                                                    <a href="#" title="">@DataRU.Sale</a>
+                                                    @DataRU.Roga
+                                                </p>
+                                                <p><b>@DataRU.Discount</b>@DataRU.Percents15</p>
+                                                <figure><img src="~/uploads/slide-2.jpg" alt="" title=""></figure>
+                                            </div>
+                                            <div class="item">
+                                                <h4>@DataRU.Kopita</h4>
+                                                <p>
+                                                    <a href="#" title="">@DataRU.Sale</a>
+                                                    @DataRU.Kopita
+                                                </p>
+                                                <p><b>@DataRU.Discount</b>@DataRU.Percents15</p>
+                                                <figure><img src="~/uploads/slide-2.jpg" alt="" title=""></figure>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <a class="more blue" href="#" title="">Go to 10bis.co.il<span class="next__wrap"><i class="fa fa-angle-right"></i></span></a>
+                                </div>
+                            </section>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

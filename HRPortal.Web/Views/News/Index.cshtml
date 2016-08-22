@@ -1,0 +1,67 @@
+﻿@model IEnumerable<HRPortal.Model.News>
+
+@{
+    ViewBag.Title = "News management";
+}
+
+<h2>News management</h2>
+
+<p>
+    <button class="btn btn-default" data-toggle="modal" data-target="#NewsModal"><span class="glyphicon glyphicon-plus"></span> Create News</button>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width: 240px;">Title</th>
+            <th style="width: 240px;">CreateDate</th>
+            <th>Message</th>
+            <th style="width: 70px;"></th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach:AllNews">
+        <tr>
+            <td data-bind="text: Title"></td>
+            <td data-bind="text: CreateDate"></td>
+            <td data-bind="text: Message"></td>
+            <td>
+                <button class="btn btn-xs btn-primary" title="Edit" data-toggle="modal" data-target="#NewsModal" data-backdrop="static" data-keyboard="false" data-bind="click: $parent.editNews"><span class="glyphicon glyphicon-edit"></span></button>
+                <button class="btn btn-xs btn-danger" title="Delete" data-bind="click: $parent.removeNews"><span class="glyphicon glyphicon-remove"></span></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<div id="createnewsmodaldiv">
+    <!-- Modal -->
+    <div class="modal fade" id="NewsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel" data-bind="visible: (!NewsId())">Create a Piece of News</h4>
+                    <h4 class="modal-title" id="myModalLabel" data-bind="visible: (NewsId())">Edit a Piece of News</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <strong>News Title</strong>
+                        <input type="text" class="form-control" data-bind="value: NewsTitle" placeholder="News Title" />
+                    </p>
+
+                    <p>
+                        <strong>News Message</strong>
+                        <textarea class="form-control" data-bind="value: NewsMessage" placeholder="News message..." style="height: 240px;"></textarea>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: clearNews">Cancel</button>
+                    <button type="button" class="btn btn-success" data-bind="visible: (!NewsId()), click: createNews">Create</button>
+                    <button type="button" class="btn btn-success" data-bind="visible: (NewsId()), click: updateNews">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/ViewModel/News/NewsManagement.js")
+}
