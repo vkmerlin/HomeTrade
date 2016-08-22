@@ -10,6 +10,8 @@ var itemsVM = {
     description: ko.observable(),
     price: ko.observable(),
     selectedCategory: ko.observable(),
+    productId: ko.observable(),
+    newCategoryId: ko.observable(),
 
     loadProducts: function () {
         var self = this;
@@ -21,7 +23,7 @@ var itemsVM = {
 
     createProduct: function () {
         var self = this;
-        if (!self.name() || self.name().trim().length === 0 || !self.description() || self.description().trim().length === 0 || self.price() == 0) {
+        if (!self.name() || self.name().trim().length === 0 || !self.description() || self.description().trim().length === 0 || self.price() == 0 || !self.selectedCategory()) {
             showBlockMessage('Нужно ввести всю информацию для продукта');
             return;
         }
@@ -35,25 +37,29 @@ var itemsVM = {
         });
     },
 
-    editProduct: function (cat) {
-        bootbox.prompt({
-            title: "Введите название продукта",
-            value: cat.categoryName,
-            callback: function (result) {
-                if (result != null) {
-                    if (result.length > 0) {
-                        SubmitPostWithParams('/api/AdminApi/UpdateProduct', { id: cat.id, CategoryName: result }, function (data) {
-                            itemsVM.clearProducts();
-                            itemsVM.loadProducts();
-                            unblockScreen();
-                        });
-                    }
-                    else {
-                        bootbox.alert("Введите название!");
-                    }
-                }
-            }
+    editProduct: function (item) {
+        itemsVM.productId(item.id);
+    },
+
+    updateProduct: function(item) {
+        var self = this;
+        if (!item.name || item.name.trim().length === 0 || !item.description || item.description.trim().length === 0 || item.price == 0 || !item.categoryId) {
+            showBlockMessage('Нужно ввести всю информацию для продукта');
+            return;
+        }
+        blockScreen();
+
+        SubmitPostWithParams('/api/AdminApi/UpdateProduct', { Id: item.id, Name: self.name, Description: item.description, CategoryId: item.categoryId, Price: item.price }, function (data) {
+            $('#addprodbtn').addClass('hidden');
+            itemsVM.clearProducts();
+            itemsVM.loadProducts();
+            unblockScreen();
         });
+    },
+
+    cancelUpdate: function(){
+        itemsVM.clearProducts();
+        itemsVM.loadProducts();
     },
 
     removeProduct: function (item) {
@@ -80,5 +86,8 @@ var itemsVM = {
         itemsVM.name(null);
         itemsVM.description(null);
         itemsVM.selectedCategory(null);
+        itemsVM.price(null);
+        itemsVM.selectedCategory(null);
+        itemsVM.productId(null);
     }
 };

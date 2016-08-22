@@ -124,6 +124,15 @@ namespace HRPortal.Web.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Отменить.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Каталог.
         /// </summary>
         public static string Catalog {
@@ -354,6 +363,15 @@ namespace HRPortal.Web.App_LocalResources {
         public static string Sale {
             get {
                 return ResourceManager.GetString("Sale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Сохранить.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         

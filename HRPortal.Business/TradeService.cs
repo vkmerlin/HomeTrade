@@ -6,7 +6,7 @@ using System;
 
 namespace HRPortal.Business
 {
-    public class TradeService: ITradeService
+    public class TradeService : ITradeService
     {
         ICategoryRepository categoryDao;
         ITradeItemRepository itemDao;
@@ -53,8 +53,16 @@ namespace HRPortal.Business
         }
 
         public void UpdateProduct(TradeItem item)
-        { 
-            itemDao.Update(item);
+        {
+            var prod = itemDao.GetById(item.Id);
+            if (prod != null)
+            {
+                prod.Name = item.Name;
+                prod.CategoryId = item.CategoryId;
+                prod.Description = item.Description;
+                prod.Price = item.Price;
+                itemDao.Update(prod);
+            }
         }
 
         public TradeItem GetProductById(int id)

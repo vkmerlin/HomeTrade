@@ -11,6 +11,9 @@ var categoryVM = {
         var self = this;
         SubmitGet('/api/AdminApi/GetCategories', null, function (data) {
             self.allCategories(data);
+            categoryVM.allCategories.subscribe(function (newCats) {
+                itemsVM.allCategories(newCats);
+            });
         });
     },
 

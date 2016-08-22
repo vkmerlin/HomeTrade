@@ -1387,13 +1387,12 @@ a.more__foto {
     }
 
 .editcategoryarea {
-    text-align: right;
-    position: absolute;
+    display: inline;
+    float: right;
 }
 
-    .editcategoryarea > a > img {
-        max-width: 3%;
-        padding-right: 10px;
+    .editcategoryarea > a {
+        margin-right: 5px;
     }
 
 .show-block {

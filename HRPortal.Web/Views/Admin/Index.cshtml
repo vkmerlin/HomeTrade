@@ -18,8 +18,8 @@
             <li class="list-group-item">
                 <span data-bind="text: categoryName"></span>
                 <span class="editcategoryarea">
-                    <a href="javascript:void()" data-bind="click: $parent.editCategory"><img src="~/Images/editicon.png" /></a>
-                    <a href="javascript:void()" data-bind="click: $parent.removeCategory"><img src="~/Images/removeicon.png" /></a>
+                    <a href="javascript:void()" data-bind="click: $parent.editCategory">Edit</a>
+                    <a href="javascript:void()" data-bind="click: $parent.removeCategory">Delete</a>
                 </span>
             </li>
 
@@ -54,11 +54,31 @@
 
         <ul class="list-group" data-bind="foreach: Enumerable.From(allProducts()).OrderBy(function (x) { return x.name }).ToArray()">
             <li class="list-group-item">
-                <span data-bind="text: name"></span>
-                <span class="editcategoryarea">
-                    <a href="javascript:void()" data-bind="click: $parent.editProduct"><img src="~/Images/editicon.png" /></a>
-                    <a href="javascript:void()" data-bind="click: $parent.removeProduct"><img src="~/Images/removeicon.png" /></a>
-                </span>
+                <div data-bind="visible: $parent.productId() != id">
+                    <span data-bind="text: name"></span>
+                    <span class="editcategoryarea">
+                        <a href="javascript:void()" data-bind="click: $parent.editProduct">Edit</a>
+                        <a href="javascript:void()" data-bind="click: $parent.removeProduct">Delete</a>
+                    </span>
+                </div>
+                <div data-bind="visible: $parent.productId() == id" class="post__entry">
+                    <div class="check-wrap">
+                        <input type="text" data-bind="value: name" placeholder="Product name">
+                    </div>
+                    <textarea type="text" data-bind="visible: $parent.productId() == id, value: description"></textarea>
+                    <div class="check-wrap">
+                        <input type="number" data-bind="value: price" placeholder="Product price">
+                    </div>
+                    <div class="select-outer">
+                        <select data-bind="options: $parent.allCategories, optionsText: 'categoryName', optionsValue: 'id', value: categoryId"></select>
+                    </div>
+
+                    <div class="editnewspost">
+                        <button class="add__btn" data-bind="click: $parent.cancelUpdate">@DataRU.Cancel</button>
+                        <button class="add__btn" data-bind="click: $parent.updateProduct">@DataRU.Save</button>
+                    </div>
+                </div>
+
             </li>
 
         </ul>
