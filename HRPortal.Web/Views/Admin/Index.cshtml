@@ -46,7 +46,14 @@
             <div class="select-outer">
                 <select data-bind="options: allCategories, optionsText: 'categoryName', optionsValue: 'id', value: selectedCategory, optionsCaption: '@DataRU.ChooseCategory'"></select>
             </div>
+            <div class="newspreviewimage" data-bind="foreach: uploadedimages">
+                <img data-bind="attr: { src: data }" />
+            </div>
+
             <div class="addPost">
+                <div id="addfilecontainer" class="addfile" title="Add a file">
+                    <input id="fileUpload" type="file" multiple accept="image/jpeg, image/png, image/gif, image/tiff" />
+                </div>
                 <button class="add__btn add__btnlong" data-bind="click: createProduct">@DataRU.NewProduct <span class="plus__wrap"><i class="fa fa-plus"></i></span></button>
             </div>
         </div>
@@ -72,7 +79,13 @@
                     <div class="select-outer">
                         <select data-bind="options: $parent.allCategories, optionsText: 'categoryName', optionsValue: 'id', value: categoryId"></select>
                     </div>
-
+                    <div class="newspreviewimage" data-bind="foreach: attachments">
+                        <div class="post-wrap" data-bind="attr: { id: id }" style="float: left;">
+                            <a href="#" target="_blank" data-bind="attr: { href: attachementPath }">
+                                <img data-bind="attr: { src: attachementPath }">
+                            </a>
+                        </div>
+                    </div>
                     <div class="editnewspost">
                         <button class="add__btn" data-bind="click: $parent.cancelUpdate">@DataRU.Cancel</button>
                         <button class="add__btn" data-bind="click: $parent.updateProduct">@DataRU.Save</button>

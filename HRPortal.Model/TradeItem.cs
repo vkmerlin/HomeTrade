@@ -20,6 +20,8 @@ namespace HRPortal.Model
 
         public decimal Price { get; set; }
 
+        public DateTime CreateDate { get; set; }
+
         public virtual ICollection<TradeItemAttachment> Attachments { get; set; }
     }
 }

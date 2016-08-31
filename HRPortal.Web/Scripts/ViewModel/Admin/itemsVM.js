@@ -12,12 +12,37 @@ var itemsVM = {
     selectedCategory: ko.observable(),
     productId: ko.observable(),
     newCategoryId: ko.observable(),
+    uploadedimages: ko.observableArray([]),
 
     loadProducts: function () {
         var self = this;
         SubmitGet('/api/AdminApi/GetProducts', null, function (data) {
             self.allProducts(data.products);
             self.allCategories(data.categories);
+            self.addHandlers();
+        });
+    },
+
+    addHandlers: function () {
+        $('input#fileUpload').change(function () {
+            itemsVM.uploadedimages([]);
+            var input = this;
+            if (input.files.length > 5) {
+                showBlockMessage('Максимум 5 картинок');
+                return;
+            }
+            else if (input.files && input.files.length > 0) {
+                $.each(input.files, function (i, c) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        itemsVM.uploadedimages.push({ data: e.target.result });
+                    }
+                    reader.readAsDataURL(input.files[i]);
+                });
+            }
+            else {
+                NewsVM.uploadedimages([]);
+            }
         });
     },
 
@@ -29,7 +54,24 @@ var itemsVM = {
         }
         blockScreen();
 
-        SubmitPostWithParams('/api/AdminApi/CreateNewProduct', { Name: self.name(), Description: self.description(), CategoryId: self.selectedCategory(), Price: self.price() }, function (data) {
+        var data = new FormData();
+        var files = $("#fileUpload").get(0).files;
+        if (files.length > 5) {
+            showBlockMessage('Максимум 5 картинок');
+            return;
+        }
+        else if (files.length > 0) {
+            $.each(files, function (k, v) {
+                data.append("file" + k, files[k]);
+            });
+        }
+        blockScreen();
+        data.append("Name", self.name());
+        data.append("Description", self.description());
+        data.append("CategoryId", self.selectedCategory());
+        data.append("Price", self.price());
+
+        SubmitPostWithParamsNoTypes('/api/AdminApi/CreateNewProduct', data, function (responce) {
             $('#addprodbtn').addClass('hidden');
             itemsVM.clearProducts();
             itemsVM.loadProducts();

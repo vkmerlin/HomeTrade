@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HRPortal.Model
 {
@@ -12,6 +8,7 @@ namespace HRPortal.Model
 
         public int TradeItemId { get; set; }
 
+        [NotMapped]
         public TradeItem TradeItem { get; set; }
 
         public string AttachementPath { get; set; }

@@ -8,17 +8,8 @@ namespace HRPortal.Web.Helpers
 {
     public static class AppConfig
     {
-        public static string UploadFilesTo
-        {
-            get
-            {
-                return WebConfigurationManager.AppSettings["UploadFilesTo"];
-            }
-            private set
-            {
-                WebConfigurationManager.AppSettings["UploadFilesTo"] = value;
-            }
-        }
+        public static string UploadFilesTo => WebConfigurationManager.AppSettings["UploadFilesTo"];
+        public static string UploadItemImagesTo => WebConfigurationManager.AppSettings["UploadItemImagesTo"];
 
         public static bool IsAttachmentAcceptable(string contentType)
         {
