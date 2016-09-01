@@ -14,9 +14,11 @@ namespace HRPortal.Web.App_Start
 {
     public static class NinjectWebCommon
     {
+        static IKernel kernel;
+
         public static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            kernel = new StandardKernel();
             kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
@@ -34,6 +36,7 @@ namespace HRPortal.Web.App_Start
             kernel.Bind<INewsService>().To<NewsService>();
             kernel.Bind<ITradeService>().To<TradeService>();
             kernel.Bind<INLogManager>().To<NLogManager>();
+            kernel.Bind<ICacheProvider>().To<CacheProvider>();
 
 
             ////WebData layer
@@ -44,6 +47,11 @@ namespace HRPortal.Web.App_Start
             kernel.Bind<INewsReplyRepository>().To<NewsReplyRepository>();
             kernel.Bind<ITradeItemRepository>().To<TradeItemRepository>();
             kernel.Bind<ICategoryRepository>().To<CategoryRepository>();
+        }
+
+        public static T TryGetInstance<T>()
+        {
+            return kernel.TryGet<T>();
         }
     }
 }

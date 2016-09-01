@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace HRPortal.Web.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         // GET: Admin
         public ActionResult Index()

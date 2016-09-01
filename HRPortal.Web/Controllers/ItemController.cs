@@ -13,5 +13,11 @@ namespace HRPortal.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Category(int id)
+        {
+            return View();
+        }
+        
     }
 }

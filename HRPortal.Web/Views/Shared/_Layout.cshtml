@@ -79,11 +79,25 @@
                                             <li><a href="~/Admin/Index" title=""><i class="fa fa-picture-o"></i>@DataRU.ItemsManagement</a></li>
                                         }
                                         <li><a href="~/Home/Index" title=""><i class="fa fa-newspaper-o"></i>@DataRU.News</a></li>
-                                        <li><a href="employees.html" title=""><i class="fa fa-picture-o"></i>@DataRU.Catalog</a></li>
                                         <li><a href="events.html" title=""><i class="fa fa-calendar"></i>@DataRU.Discounts</a></li>
                                         <li><a href="albums.html" title=""><i class="fa fa-user"></i>@DataRU.Actions</a></li>
                                         <li><a href="#" title=""><i class="fa fa-folder-open-o"></i>@DataRU.Delivery</a></li>
                                         <li><a href="#" title=""><i class="fa fa-file-text-o"></i>@DataRU.Payments</a></li>
+                                    </ul>
+                                </nav>
+                            </section>
+
+                            <section class="mainMenu">
+                                <h2 class="title">@DataRU.Catalog</h2>
+                                <nav class="nav">
+                                    <ul class="menu">
+                                        @if (ViewBag.Categories != null)
+                                        {
+                                            foreach (var category in ViewBag.Categories)
+                                            {
+                                                <li><a href="~/Item/Category?id=@category.Id" title=""><i class="fa fa-picture-o"></i>@category.CategoryName</a></li>
+                                            }
+                                        }
                                     </ul>
                                 </nav>
                             </section>

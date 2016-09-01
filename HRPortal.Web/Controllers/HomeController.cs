@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace HRPortal.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         INewsService newsService;
 

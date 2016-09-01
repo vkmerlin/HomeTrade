@@ -25,7 +25,7 @@ namespace HRPortal.Web.App_Start.DInjection
             return resolver.TryGet(serviceType);
         }
 
-        public System.Collections.Generic.IEnumerable<object> GetServices(Type serviceType)
+        public IEnumerable<object> GetServices(Type serviceType)
         {
             if (resolver == null)
                 throw new ObjectDisposedException("this", "This scope has been disposed");
