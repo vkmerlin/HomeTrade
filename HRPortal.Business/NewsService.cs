@@ -16,7 +16,7 @@ namespace HRPortal.Business
         INewsAttachmentsRepository newsAttachmentsDao;
         INewsCommentsRepository newsCommentsDao;
         INewsReplyRepository newsReplyDao;
-        public NewsService(INewsRepository newsDao, INewsCategoryRepository newsCatsDao, INewsAttachmentsRepository newsAttachmentsDao, 
+        public NewsService(INewsRepository newsDao, INewsCategoryRepository newsCatsDao, INewsAttachmentsRepository newsAttachmentsDao,
             INewsCommentsRepository newsCommentsDao, INewsReplyRepository newsReplyDao)
         {
             this.newsDao = newsDao;
@@ -52,12 +52,12 @@ namespace HRPortal.Business
             }
         }
 
-        public List<News> GetAll()
+        public IEnumerable<News> GetAll()
         {
             return newsDao.GetAll();
         }
 
-        public List<News> GetAll(Expression<Func<News, bool>> where)
+        public IEnumerable<News> GetAll(Expression<Func<News, bool>> where)
         {
             return newsDao.GetAll(where);
         }
@@ -67,7 +67,7 @@ namespace HRPortal.Business
             return newsDao.GetById(id);
         }
 
-        public List<NewsCategories> GetNewsCategories()
+        public IEnumerable<NewsCategories> GetNewsCategories()
         {
             return newsCatsDao.GetAll();
         }
@@ -77,10 +77,11 @@ namespace HRPortal.Business
             await Task.Run(() => newsDao.Delete(pieceOfNews));
         }
 
-        public List<News> GetNews(int pageNum = 0, bool position = false)
+        public IEnumerable<News> GetNews(int pageNum = 0, bool position = false)
         {
-            if (position) {
-                List<News> news = newsDao.GetAll(x => x.IsPin);
+            if (position)
+            {
+                List<News> news = newsDao.GetAll(x => x.IsPin).ToList();
                 news.AddRange(newsDao.GetNews(0, pageNum));
                 return news;
             }
@@ -88,14 +89,15 @@ namespace HRPortal.Business
             var newsNumber = (int)NewsPerPage.Small;
             if (pageNum == 0)
             {
-                List<News> news = newsDao.GetAll(x => x.IsPin);
+                List<News> news = newsDao.GetAll(x => x.IsPin).ToList();
                 if (news.Count >= newsNumber)
                     return news;
                 else
                     news.AddRange(newsDao.GetNews(0, newsNumber - news.Count));
                 return news;
             }
-            else {
+            else
+            {
                 return newsDao.GetNews(pageNum, newsNumber);
             }
         }
@@ -115,6 +117,20 @@ namespace HRPortal.Business
         public async Task CreateNewsReply(NewsReply newReply)
         {
             await Task.Run(() => newsReplyDao.Save(newReply));
+        }
+
+        public async Task RemoveComment(int id)
+        {
+            var comment = newsCommentsDao.GetById(id);
+            if (comment != null)
+                await Task.Run(() => newsCommentsDao.Delete(comment));
+        }
+
+        public async Task RemoveReply(int id)
+        {
+            var reply = newsReplyDao.GetById(id);
+            if (reply != null)
+                await Task.Run(() => newsReplyDao.Delete(reply));
         }
     }
 }

@@ -241,6 +241,28 @@ var NewsVM = {
         });
     },
 
+    removeComment: function (comment) {
+        bootbox.confirm("Удалить комментарий?", function (result) {
+            if (result) {
+                SubmitPostWithParams('/api/NewsApi/RemoveComment', comment, function (data) {
+                    NewsVM.loadNewsWithCurrentPosition();
+                    NewsVM.clearNews();
+                });
+            }
+        });
+    },
+
+    removeReply: function (reply) {
+        bootbox.confirm("Удалить ответ на комментарий?", function (result) {
+            if (result) {
+                SubmitPostWithParams('/api/NewsApi/RemoveReply', reply, function (data) {
+                    NewsVM.loadNewsWithCurrentPosition();
+                    NewsVM.clearNews();
+                });
+            }
+        });
+    },
+
     removeAttachment: function (attId) {
         SubmitPostWithParams('/api/NewsApi/RemoveAttachment', attId, null);
         $.each(NewsVM.AllNews(), function (i, s) {
@@ -316,7 +338,9 @@ var NewsVM = {
     },
 
     clearNews: function () {
-        document.getElementById("addfilecontainer").innerHTML = document.getElementById("addfilecontainer").innerHTML;
+        if (document.getElementById("addfilecontainer")) {
+            document.getElementById("addfilecontainer").innerHTML = document.getElementById("addfilecontainer").innerHTML;
+        }
         NewsVM.ShowFullMessage(null),
         NewsVM.NewsId(null),
         NewsVM.NewsTitle(null),

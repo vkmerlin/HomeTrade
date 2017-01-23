@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -48,7 +47,7 @@ namespace HRPortal.Web.Controllers
             bool isPin = false;
             if (!Int32.TryParse(HttpContext.Current.Request["NewsCategoryId"], out catId) || !bool.TryParse(HttpContext.Current.Request["IsPin"], out isPin)
                 || string.IsNullOrEmpty(HttpContext.Current.Request["Title"]) || string.IsNullOrEmpty(HttpContext.Current.Request["Message"]))
-                return Content(HttpStatusCode.BadRequest, "Model state invalid");
+                return BadRequest("Model state invalid");
             try
             {
                 var news = GetNewsWithAttachmentsFromRequest(null, catId, isPin);
@@ -62,7 +61,7 @@ namespace HRPortal.Web.Controllers
             catch (Exception exp)
             {
                 logService.LogFatal(exp.Message);
-                return Content(HttpStatusCode.BadRequest, "An error occurred");
+                return BadRequest("An error occurred");
             }
             return Ok();
         }
@@ -75,7 +74,7 @@ namespace HRPortal.Web.Controllers
             bool isPin = false;
             if (!Int32.TryParse(HttpContext.Current.Request["Id"], out id) || !Int32.TryParse(HttpContext.Current.Request["NewsCategoryId"], out catId) || !bool.TryParse(HttpContext.Current.Request["IsPin"], out isPin)
                 || string.IsNullOrEmpty(HttpContext.Current.Request["Title"]) || string.IsNullOrEmpty(HttpContext.Current.Request["Message"]))
-                return Content(HttpStatusCode.BadRequest, "Model state invalid");
+                return BadRequest("Model state invalid");
             try
             {
                 var news = GetNewsWithAttachmentsFromRequest(id, catId, isPin);
@@ -89,7 +88,7 @@ namespace HRPortal.Web.Controllers
             catch (Exception exp)
             {
                 logService.LogFatal(exp.Message);
-                return Content(HttpStatusCode.BadRequest, "An error occurred");
+                return BadRequest("An error occurred");
             }
             return Ok();
         }
@@ -137,11 +136,25 @@ namespace HRPortal.Web.Controllers
         }
 
         [HttpPost]
+        public async Task<IHttpActionResult> RemoveComment(NewsComments comment)
+        {
+            await newsService.RemoveComment(comment.Id);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> RemoveReply(NewsReply reply)
+        {
+            await newsService.RemoveReply(reply.Id);
+            return Ok();
+        }
+
+        [HttpPost]
         public async Task<IHttpActionResult> AddNewsComment(NewsComments newReply)
         {
             if (!ModelState.IsValid)
             {
-                return Content(HttpStatusCode.BadRequest, "Validation error.");
+                return BadRequest("Validation error.");
             }
             newReply.CreateDate = DateTime.UtcNow;
             await newsService.CreateNewsComment(newReply);
@@ -153,7 +166,7 @@ namespace HRPortal.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Content(HttpStatusCode.BadRequest, "Validation error.");
+                return BadRequest("Validation error.");
             }
             newReply.CreateDate = DateTime.UtcNow;
             await newsService.CreateNewsReply(newReply);

@@ -110,6 +110,12 @@
                         <div class="comments__body">
                             <ul class="commnts__list" data-bind="foreach: Enumerable.From(comments).OrderBy(function (x) { return x.createDate }).ToArray() ">
                                 <li data-bind="visible: $index() > ($parent.comments.length - 4) || $root.ShowAllComments() == $parent.id">
+                                    @if (User.IsInRole("Administrator"))
+                                    {
+                                        <div class="editnewsarea">
+                                            <a href="javascript:void()" data-bind="click: $root.removeComment"><img src="~/Images/removeicon.png" /></a>
+                                        </div>
+                                    }
                                     <figure class="avatar">
                                         <img src="uploads/002.png" alt="" title="">
                                     </figure>
@@ -132,6 +138,12 @@
                                     </div>
                                     <ul class="commnts__list" data-bind="foreach: Enumerable.From(replies).OrderBy(function (x) { return x.createDate }).ToArray()">
                                         <li>
+                                            @if (User.IsInRole("Administrator"))
+                                            {
+                                                <div class="editnewsarea">
+                                                    <a href="javascript:void()" data-bind="click: $root.removeReply"><img src="~/Images/removeicon.png" /></a>
+                                                </div>
+                                            }
                                             <figure class="avatar">
                                                 <img src="uploads/002.png" alt="" title="">
                                             </figure>

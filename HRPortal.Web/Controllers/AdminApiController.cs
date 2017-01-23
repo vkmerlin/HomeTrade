@@ -1,14 +1,16 @@
 ﻿using HRPortal.Business;
 using HRPortal.Model;
+using HRPortal.Model.Identity;
 using HRPortal.Model.ViewModels;
 using HRPortal.Web.Exceptions;
 using HRPortal.Web.Helpers;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -116,6 +118,11 @@ namespace HRPortal.Web.Controllers
         {
             tradeService.UpdateProduct(item);
             return Ok();
+        }
+
+        public IEnumerable<UserViewModel> GetUsers()
+        {
+            return AutoMapper.Mapper.Map<IEnumerable<UserViewModel>>(new UserStore<ApplicationUser>(new ApplicationDbContext()).Users);
         }
 
         private TradeItem GetNewsWithAttachmentsFromRequest(int? id, int categoryId, decimal price)

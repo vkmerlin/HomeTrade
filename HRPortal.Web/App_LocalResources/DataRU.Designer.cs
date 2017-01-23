@@ -160,6 +160,24 @@ namespace HRPortal.Web.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to нажмите сюда что войти.
+        /// </summary>
+        public static string ClickToLogin {
+            get {
+                return ResourceManager.GetString("ClickToLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Спасибо за подверждение электронного адреса. Пожалуйста, .
+        /// </summary>
+        public static string ConfirmationSuccessful {
+            get {
+                return ResourceManager.GetString("ConfirmationSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Доставка.
         /// </summary>
         public static string Delivery {
@@ -183,6 +201,15 @@ namespace HRPortal.Web.App_LocalResources {
         public static string Discounts {
             get {
                 return ResourceManager.GetString("Discounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Письмо с кодом подтверждения выслано на указанный электронный адрес. Пожалуйста, проверьте почту и подтвердите электронный адрес..
+        /// </summary>
+        public static string EmailConfirmationSent {
+            get {
+                return ResourceManager.GetString("EmailConfirmationSent", resourceCulture);
             }
         }
         
@@ -381,6 +408,24 @@ namespace HRPortal.Web.App_LocalResources {
         public static string Send {
             get {
                 return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Управление пользователями.
+        /// </summary>
+        public static string UserManagement {
+            get {
+                return ResourceManager.GetString("UserManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пользователи.
+        /// </summary>
+        public static string Users {
+            get {
+                return ResourceManager.GetString("Users", resourceCulture);
             }
         }
     }

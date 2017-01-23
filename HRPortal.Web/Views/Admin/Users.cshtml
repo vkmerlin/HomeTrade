@@ -1,0 +1,24 @@
+﻿@using HRPortal.Web.App_LocalResources;
+
+<div class="сol_2">
+    <div id="usermanagement" class="content">
+        <h2 class="title">@DataRU.Users</h2>
+        <ul class="list-group" data-bind="foreach: Enumerable.From(allUsers()).OrderBy(function (x) { return x.email }).ToArray()">
+            <li class="list-group-item">
+                <span data-bind="text: email"></span>
+                <span class="editcategoryarea">
+                    <a href="javascript:void()" data-bind="click: $parent.banUser">Ban</a>
+                </span>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/ViewModel/Admin/useersVM.js")
+}

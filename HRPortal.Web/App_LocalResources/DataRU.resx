@@ -226,4 +226,19 @@
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
   </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>Управление пользователями</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Пользователи</value>
+  </data>
+  <data name="EmailConfirmationSent" xml:space="preserve">
+    <value>Письмо с кодом подтверждения выслано на указанный электронный адрес. Пожалуйста, проверьте почту и подтвердите электронный адрес.</value>
+  </data>
+  <data name="ClickToLogin" xml:space="preserve">
+    <value>нажмите сюда что войти</value>
+  </data>
+  <data name="ConfirmationSuccessful" xml:space="preserve">
+    <value>Спасибо за подверждение электронного адреса. Пожалуйста, </value>
+  </data>
 </root>

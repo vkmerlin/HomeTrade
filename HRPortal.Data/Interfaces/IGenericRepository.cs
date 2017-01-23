@@ -1,18 +1,15 @@
 ﻿using HRPortal.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HRPortal.Data
 {
     public interface IGenericRepository<TEntity> where TEntity : class, IEntity
     {
-        List<TEntity> GetAll();
+        IEnumerable<TEntity> GetAll();
 
-        List<TEntity> GetAll(Expression<Func<TEntity, bool>> where);
+        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> where);
 
         TEntity GetById(int id);
 

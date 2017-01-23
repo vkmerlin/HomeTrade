@@ -145,6 +145,7 @@
     <Compile Include="ViewModels\CreateProductViewModel.cs" />
     <Compile Include="ViewModels\NewsCategoriesViewModel.cs" />
     <Compile Include="ViewModels\NewsViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

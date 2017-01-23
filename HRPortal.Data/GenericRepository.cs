@@ -15,12 +15,12 @@ namespace HRPortal.Data
             db = new HRPortalContext();
         }
 
-        public List<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
             return db.Set<TEntity>().ToList();
         }
 
-        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> where)
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> where)
         {
             return db.Set<TEntity>().Where(where).ToList();
         }
