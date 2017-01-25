@@ -1,11 +1,6 @@
 ﻿@using HRPortal.Web.App_LocalResources;
 
-@{
-    ViewBag.Title = "Confirm Email";
-}
-
 <div class="maindiv">
-    <h2>@ViewBag.Title.</h2>
     <div>
         <p>
             @DataRU.ConfirmationSuccessful@Html.ActionLink(DataRU.ClickToLogin, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })

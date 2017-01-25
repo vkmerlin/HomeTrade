@@ -241,4 +241,19 @@
   <data name="ConfirmationSuccessful" xml:space="preserve">
     <value>Спасибо за подверждение электронного адреса. Пожалуйста, </value>
   </data>
+  <data name="RegisterConfirmEmailMessage" xml:space="preserve">
+    <value>сюда</value>
+  </data>
+  <data name="RegistrationApplicationName" xml:space="preserve">
+    <value>сайте обуви имени Кристосика</value>
+  </data>
+  <data name="RegistrationSubject" xml:space="preserve">
+    <value>подтверждение регистрации</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="RegisterNewUser" xml:space="preserve">
+    <value>Регистрация нового пользователя</value>
+  </data>
 </root>

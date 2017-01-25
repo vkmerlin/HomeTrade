@@ -376,6 +376,51 @@ namespace HRPortal.Web.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Регистрация.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to сюда.
+        /// </summary>
+        public static string RegisterConfirmEmailMessage {
+            get {
+                return ResourceManager.GetString("RegisterConfirmEmailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Регистрация нового пользователя.
+        /// </summary>
+        public static string RegisterNewUser {
+            get {
+                return ResourceManager.GetString("RegisterNewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to сайте обуви имени Кристосика.
+        /// </summary>
+        public static string RegistrationApplicationName {
+            get {
+                return ResourceManager.GetString("RegistrationApplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to подтверждение регистрации.
+        /// </summary>
+        public static string RegistrationSubject {
+            get {
+                return ResourceManager.GetString("RegistrationSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Рога.
         /// </summary>
         public static string Roga {

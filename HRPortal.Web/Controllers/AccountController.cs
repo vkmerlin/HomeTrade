@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HRPortal.Model.Identity;
+using HRPortal.Web.App_LocalResources;
 
 namespace HRPortal.Web.Controllers
 {
@@ -159,7 +160,7 @@ namespace HRPortal.Web.Controllers
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await UserManager.SendEmailAsync(user.Id, $"{model.UserName}, {DataRU.RegistrationSubject}", $"{model.UserName}, cпасибо за регистрацию на {DataRU.RegistrationApplicationName}!<p> Нажмите <a href={callbackUrl}>{DataRU.RegisterConfirmEmailMessage}</a> что бы подтвердить регистрацию.</p>");
 
                     return View("DisplayEmail");
                 }
